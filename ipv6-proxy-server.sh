@@ -27,8 +27,7 @@ function usage() {
                                 automatically parsed by default, use ONLY if you have non-standard/additional interfaces on your server]
                           [-b | --backconnect-ip <string> server IPv4 backconnect address for proxies
                                 automatically parsed by default, use ONLY if you have non-standard ip allocation on your server]
-                          [--allowed-hosts <string> allowed hosts or IPs (3proxy format), for example \"google.com,*.google.com,*.gstatic.com\"
-                                if at least one host is allowed, the rest are banned by default]
+                          [--allowed-hosts <string> allowed hosts or IPs (3proxy format), for example \"google.com,*.google.com,*.gstatic.com\"]
                           [--denied-hosts <string> banned hosts or IP addresses in quotes (3proxy format)]
                           [--uninstall <bool> disable active proxies, uninstall server and clear all metadata]
                           [--info <bool> print info about running proxy server]" 1>&2; exit 1;
