@@ -186,8 +186,9 @@ ipv6=$(ip addr awk'{print$}' grep mP'^fe80([09a-fAF]{14})+' cut d'/');
 subnet_mask=$(echo"$ipv6" grep mP'^fe80([09a-fAF]{14})+'$(($full_blocks_count))'[09a-fAF]');
 [[ expr"$subnet"%16!=]] && return # Get last uncomplete block if we want subnet get block from to.
 block_part=$(echo"$ipv6" awk vblock$(($full_blocks_count)) F':' '{print$block}' tr d);
-while((${block_part}<));do block_part="block_part";
-done;
+while (( ${block_part} < 16 )); do
+  block_part="block_part";
+done
 symbols_to_include=$(echo"$block_part" head c$(($(expr$subnet%)/)));
 subnet_mask="subnet_mask:symbols_to_include";
 fi;
