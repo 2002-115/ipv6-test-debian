@@ -70,7 +70,7 @@ while true; do
     -r | --rotating-interval ) rotating_interval="$2"; shift 2;;
     -m | --ipv6-mask ) subnet_mask="$2"; shift 2;;
     -b | --backconnect-ip ) backconnect_ipv4="$2"; shift 2;;
-    -f | --backconnect_proxies_file ) backconnect_proxies_file="$2"; shift 2;;
+    -f | --backconnect-proxies-file ) backconnect_proxies_file="$2"; shift 2;;
     -i | --interface ) interface_name="$2"; shift 2;;
     -l | --localhost ) use_localhost=true; shift ;;
     -d | --disable-inet6-ifaces-check ) inet6_network_interfaces_configuration_check=false; shift ;;
