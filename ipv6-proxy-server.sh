@@ -113,9 +113,9 @@ function check_startup_parameters(){
 re='^[0-9]+$'
 if ! [[ $proxy_count =~ $re ]]; then log_err_print_usage_and_exit "Error: Argument -c (proxy count) must be a positive integer number"; fi;
 
-if ([ -z $user ] || [ -z $password ]) && is_auth_used && [ $use_random_auth = false ]; then log_err_print_usage_and_exit "Error: user and password for proxy with auth is required (specify both '--username' and '--password' startup parameters)"; fi;
+if { [ -z $user ] || [ -z $password ]; } && is_auth_used && [ $use_random_auth = false ]; then log_err_print_usage_and_exit "Error: user and password for proxy with auth is required (specify both '--username' and '--password' startup parameters)"; fi;
 
-if ([[ ! -z $user ]] || [[ ! -z $password ]]) && [ $use_random_auth = true ]; then log_err_print_usage_and_exit "Error: don't provide user or password as arguments, if '--random' flag is set."; fi;
+if { [[ ! -z $user ]] || [[ ! -z $password ]]; } && [ $use_random_auth = true ]; then log_err_print_usage_and_exit "Error: don't provide user or password as arguments, if '--random' flag is set."; fi;
 
 if [ $proxies_type != "http" ] && [ $proxies_type != "socks5" ]; then log_err_print_usage_and_exit "Error: invalid value of '-t' (proxy type) parameter"; fi;
 
