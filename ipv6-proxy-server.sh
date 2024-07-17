@@ -113,9 +113,9 @@ function check_startup_parameters(){
 re='^[0-9]+$'
 if ! [[ $proxy_count =~ $re ]]; then log_err_print_usage_and_exit "Error: Argument -c (proxy count) must be a positive integer number"; fi;
 
-if { [ -z $user ] || [ -z $password ]; } && is_auth_used && [ $use_random_auth = false ]; then log_err_print_usage_and_exit "Error: user and password for proxy with auth is required (specify both '--username' and '--password' startup parameters)"; fi;
+if ([ -z $user ] || [ -z $password ]) && is_auth_used && [ $use_random_auth = false ]; then log_err_print_usage_and_exit "Error: user and password for proxy with auth is required (specify both '--username' and '--password' startup parameters)"; fi;
 
-if { [[ ! -z $user ]] || [[ ! -z $password ]]; } && [ $use_random_auth = true ]; then log_err_print_usage_and_exit "Error: don't provide user or password as arguments, if '--random' flag is set."; fi;
+if ([[ ! -z $user ]] || [[ ! -z $password ]]) && [ $use_random_auth = true ]; then log_err_print_usage_and_exit "Error: don't provide user or password as arguments, if '--random' flag is set."; fi;
 
 if [ $proxies_type != "http" ] && [ $proxies_type != "socks5" ]; then log_err_print_usage_and_exit "Error: invalid value of '-t' (proxy type) parameter"; fi;
 
@@ -157,21 +157,7 @@ function is_proxyserver_installed(){
 }
 
 function is_proxyserver_running(){
-ps aux | grep "[3]proxy" &>/dev/null
-}
-
-function ensure_proxy_is_running(){
-if ! is_proxyserver_running; then 
-echo "Proxy server is not running. Starting now..."
-$bash_location "$startup_script_path"
-fi
-
-# Check again after attempting to start the proxy server.
-if ! is_proxyserver_running; then 
-log_err_and_exit "Failed to start the proxy server."
-else 
-echo "Proxy server started successfully."
-fi
+ps aux | grep -q $proxyserver_config_path
 }
 
 function is_package_installed(){
@@ -208,27 +194,3 @@ subnet_mask="subnet_mask:symbols_to_include";
 fi;
 echo"$subnet_mask";
 }
-
-# Main script logic starts here
-
-check_startup_parameters
-
-# Ensure required packages are installed.
-required_packages=("make" "g++" "wget" "curl")
-for package in "${required_packages[@]}"; do 
-is_package_installed "$package" || apt-get install "$package" -y 
-done
-
-# Ensure the proxy server directory exists.
-mkdir -p "$proxy_dir"
-
-# Install and configure the proxy server if not already installed.
-if ! is_proxyserver_installed; then 
-echo "Installing and configuring the proxy server..."
-# Add installation and configuration steps here...
-fi
-
-# Ensure the proxy server is running.
-ensure_proxy_is_running
-
-echo "Proxy setup complete."
