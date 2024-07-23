@@ -3,6 +3,17 @@
 # Thiết lập môi trường không tương tác
 export DEBIAN_FRONTEND=noninteractive
 
+# Hàm chờ đợi khóa apt/dpkg
+wait_for_lock() {
+  while sudo fuser /var/lib/dpkg/lock-frontend >/dev/null 2>&1; do
+    echo "Waiting for other package managers to finish..."
+    sleep 5
+  done
+}
+
+# Chờ đợi khóa apt/dpkg trước khi tiếp tục
+wait_for_lock
+
 # Tạo hoặc chỉnh sửa tệp cấu hình để tắt thông báo
 echo 'Dpkg::Options {
    "--force-confdef";
