@@ -25,14 +25,14 @@ echo "tắt thông báo ✅ ✅ ✅ ✅ ✅"
 # Chờ đợi khóa apt/dpkg trước khi tiếp tục
 wait_for_lock
 
-# Cập nhật và nâng cấp hệ thống
-sudo apt update && sudo apt upgrade -y
+# Cập nhật và nâng cấp hệ thống với các tùy chọn dpkg để giữ bản địa phương của tệp cấu hình
+sudo apt update && sudo apt upgrade -y --allow-downgrades --allow-remove-essential --allow-change-held-packages -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold"
 
 # Chờ đợi khóa apt/dpkg trước khi tiếp tục
 wait_for_lock
 
-# Cài đặt các gói cần thiết
-sudo apt install wget zip curl openssl -y
+# Cài đặt các gói cần thiết với các tùy chọn dpkg để giữ bản địa phương của tệp cấu hình
+sudo apt install wget zip curl openssl -y --allow-downgrades --allow-remove-essential --allow-change-held-packages -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold"
 
 echo "cập nhật ✅ ✅ ✅ ✅ ✅"
 
