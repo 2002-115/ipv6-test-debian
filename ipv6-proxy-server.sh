@@ -22,16 +22,28 @@ echo 'Dpkg::Options {
 
 echo "tắt thông báo ✅ ✅ ✅ ✅ ✅"
 
+# Chờ đợi khóa apt/dpkg trước khi tiếp tục
+wait_for_lock
+
 # Cập nhật và nâng cấp hệ thống
 sudo apt update && sudo apt upgrade -y
+
+# Chờ đợi khóa apt/dpkg trước khi tiếp tục
+wait_for_lock
 
 # Cài đặt các gói cần thiết
 sudo apt install wget zip curl openssl -y
 
 echo "cập nhật ✅ ✅ ✅ ✅ ✅"
 
+# Chờ đợi khóa apt/dpkg trước khi tiếp tục
+wait_for_lock
+
 # Chạy script thiết lập mạng từ URL
 curl -sSL https://raw.githubusercontent.com/2002-115/ipv6-debian11-setup_network/main/setup_network.sh | bash
+
+# Chờ đợi khóa apt/dpkg trước khi tiếp tục
+wait_for_lock
 
 # Chạy script cài đặt proxy từ URL
 wget -qO- https://raw.githubusercontent.com/2002-115/taoipv6-OS-Debian-11-x64-bullseye-/main/custom-ipv6-proxy-server.sh | bash
