@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# Thiết lập môi trường không tương tác
+export DEBIAN_FRONTEND=noninteractive
+
 # Tạo hoặc chỉnh sửa tệp cấu hình để tắt thông báo
 echo 'Dpkg::Options {
    "--force-confdef";
