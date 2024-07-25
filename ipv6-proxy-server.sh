@@ -20,7 +20,7 @@ echo 'Dpkg::Options {
    "--force-confold";
 };' | sudo tee /etc/apt/apt.conf.d/90local > /dev/null
 
-echo "tắt thông báo ✅ ✅ ✅ ✅ ✅"
+echo "Tắt thông báo ✅ ✅ ✅ ✅ ✅"
 
 # Chờ đợi khóa apt/dpkg trước khi tiếp tục
 wait_for_lock
@@ -28,13 +28,15 @@ wait_for_lock
 # Cập nhật và nâng cấp hệ thống với các tùy chọn dpkg để giữ bản địa phương của tệp cấu hình
 sudo apt update && sudo apt upgrade -y --allow-downgrades --allow-remove-essential --allow-change-held-packages -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold"
 
+echo "Cập nhật hệ thống ✅ ✅ ✅ ✅ ✅"
+
 # Chờ đợi khóa apt/dpkg trước khi tiếp tục
 wait_for_lock
 
 # Cài đặt các gói cần thiết với các tùy chọn dpkg để giữ bản địa phương của tệp cấu hình
 sudo apt install wget zip curl openssl -y --allow-downgrades --allow-remove-essential --allow-change-held-packages -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold"
 
-echo "cập nhật ✅ ✅ ✅ ✅ ✅"
+echo "Cài đặt các gói cần thiết ✅ ✅ ✅ ✅ ✅"
 
 # Chờ đợi khóa apt/dpkg trước khi tiếp tục
 wait_for_lock
@@ -48,4 +50,4 @@ wait_for_lock
 # Chạy script cài đặt proxy từ URL
 wget -qO- https://raw.githubusercontent.com/2002-115/taoipv6-OS-Debian-11-x64-bullseye-/main/custom-ipv6-proxy-server.sh | bash
 
-echo "cài đặt ✅ ✅ ✅ ✅ ✅"
+echo "Cài đặt proxy ✅ ✅ ✅ ✅ ✅"
