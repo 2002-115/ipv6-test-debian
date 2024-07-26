@@ -55,3 +55,4 @@ wait_for_lock
 wget -qO- https://raw.githubusercontent.com/2002-115/taoipv6-OS-Debian-11-x64-bullseye-/main/custom-ipv6-proxy-server.sh | bash
 
 echo "Cài đặt proxy ✅ ✅ ✅ ✅ ✅"
+
