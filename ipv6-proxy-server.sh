@@ -5,28 +5,29 @@ export DEBIAN_FRONTEND=noninteractive
 
 # Hàm chờ đợi khóa apt/dpkg
 wait_for_lock() {
-  while sudo fuser /var/lib/dpkg/lock-frontend >/dev/null 2>&1; do
-    echo "Waiting for other package managers to finish..."
-    sleep 5
-  done
+    while sudo fuser /var/lib/dpkg/lock-frontend >/dev/null 2>&1; do
+        echo "Đang chờ các trình quản lý gói khác hoàn thành..."
+        sleep 5
+    done
 }
 
 # Chờ đợi khóa apt/dpkg trước khi tiếp tục
 wait_for_lock
 
-# Tạo hoặc chỉnh sửa tệp cấu hình để tắt thông báo
-echo 'Dpkg::Options {
-   "--force-confdef";
-   "--force-confold";
-};' | sudo tee /etc/apt/apt.conf.d/90local > /dev/null
+# Tạo hoặc chỉnh sửa tệp cấu hình để tắt thông báo và chọn mặc định
+echo 'Dpkg::Options { "--force-confdef"; "--force-confold"; };' | sudo tee /etc/apt/apt.conf.d/90local > /dev/null
 
-echo "Tắt thông báo ✅ ✅ ✅ ✅ ✅"
+echo "Tắt thông báo và chọn mặc định ✅ ✅ ✅ ✅ ✅"
+
+# Đặt trước các câu trả lời cho debconf để tránh yêu cầu tương tác
+echo '* libraries/restart-without-asking boolean true' | sudo debconf-set-selections
 
 # Chờ đợi khóa apt/dpkg trước khi tiếp tục
 wait_for_lock
 
 # Cập nhật và nâng cấp hệ thống với các tùy chọn dpkg để giữ bản địa phương của tệp cấu hình
-sudo apt update && sudo apt upgrade -y --allow-downgrades --allow-remove-essential --allow-change-held-packages -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold"
+sudo apt update -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold"
+sudo apt upgrade -y --allow-downgrades --allow-remove-essential --allow-change-held-packages -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold"
 
 echo "Cập nhật hệ thống ✅ ✅ ✅ ✅ ✅"
 
