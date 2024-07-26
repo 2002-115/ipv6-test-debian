@@ -22,6 +22,9 @@ echo "Tắt thông báo và chọn mặc định ✅ ✅ ✅ ✅ ✅"
 # Đặt trước các câu trả lời cho debconf để tránh yêu cầu tương tác
 echo '* libraries/restart-without-asking boolean true' | sudo debconf-set-selections
 
+# Đặt trước câu trả lời cho việc nâng cấp kernel
+echo 'grub-pc grub-pc/install_devices multiselect /dev/sda' | sudo debconf-set-selections
+
 # Chờ đợi khóa apt/dpkg trước khi tiếp tục
 wait_for_lock
 
